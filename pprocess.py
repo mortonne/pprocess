@@ -52,7 +52,7 @@ class AcknowledgementError(Exception):
 
 
 class Channel:
-    "A communications channel."
+    """A communications channel."""
 
     def __init__(self, pid, read_pipe, write_pipe):
 
@@ -75,7 +75,7 @@ class Channel:
 
     def close(self):
 
-        "Explicitly close the channel."
+        """Explicitly close the channel."""
 
         if self.read_pipe is not None:
             self.read_pipe.close()
@@ -87,7 +87,7 @@ class Channel:
 
     def wait(self, options=0):
 
-        "Wait for the created process, if any, to exit."
+        """Wait for the created process, if any, to exit."""
 
         if self.pid != 0:
             try:
@@ -97,7 +97,7 @@ class Channel:
 
     def _send(self, obj):
 
-        "Send the given object 'obj' through the channel."
+        """Send the given object 'obj' through the channel."""
 
         pickle.dump(obj, self.write_pipe)
         self.write_pipe.flush()
@@ -117,7 +117,7 @@ class Channel:
 
     def _receive(self):
 
-        "Receive an object through the channel, returning the object."
+        """Receive an object through the channel, returning the object."""
 
         obj = pickle.load(self.read_pipe)
         if isinstance(obj, Exception):
@@ -162,7 +162,7 @@ class PersistentChannel(Channel):
 
     def close(self):
 
-        "Close the persistent channel and remove the socket file."
+        """Close the persistent channel and remove the socket file."""
 
         Channel.close(self)
         try:
@@ -172,7 +172,7 @@ class PersistentChannel(Channel):
 
     def _ensure_pipes(self):
 
-        "Ensure that the channel is capable of communicating."
+        """Ensure that the channel is capable of communicating."""
 
         if self.read_pipe is None or self.write_pipe is None:
             # Accept any incoming connections.
@@ -188,7 +188,7 @@ class PersistentChannel(Channel):
 
     def _reset_pipes(self):
 
-        "Discard the existing connection."
+        """Discard the existing connection."""
 
         fileno = self.write_pipe.fileno()
         self.poller.unregister(fileno)
@@ -198,7 +198,7 @@ class PersistentChannel(Channel):
 
     def _ensure_communication(self, timeout=None):
 
-        "Ensure that sending and receiving are possible."
+        """Ensure that sending and receiving are possible."""
 
         while 1:
             self._ensure_pipes()
@@ -217,14 +217,14 @@ class PersistentChannel(Channel):
 
     def _send(self, obj):
 
-        "Send the given object 'obj' through the channel."
+        """Send the given object 'obj' through the channel."""
 
         self._ensure_communication()
         Channel._send(self, obj)
 
     def _receive(self):
 
-        "Receive an object through the channel, returning the object."
+        """Receive an object through the channel, returning the object."""
 
         self._ensure_communication()
         return Channel._receive(self)
@@ -284,7 +284,7 @@ class Exchange:
 
     def add(self, channel):
 
-        "Add the given 'channel' to the exchange."
+        """Add the given 'channel' to the exchange."""
 
         fileno = channel.read_pipe.fileno()
         self.readables[fileno] = channel
@@ -292,7 +292,7 @@ class Exchange:
 
     def active(self):
 
-        "Return a list of active channels."
+        """Return a list of active channels."""
 
         return self.readables.values()
 
@@ -344,13 +344,13 @@ class Exchange:
 
     def unfinished(self):
 
-        "Return whether the exchange still has work scheduled or in progress."
+        """Return whether the exchange still has work scheduled or in progress."""
 
         return self.active() or self.waiting
 
     def busy(self):
 
-        "Return whether the exchange uses as many channels as it is allowed to."
+        """Return whether the exchange uses as many channels as it is allowed to."""
 
         return self.limit is not None and len(self.active()) >= self.limit
 
@@ -649,14 +649,14 @@ class Persistent:
 
     def connect(self, address):
 
-        "Connect to a process which is contactable via the given 'address'."
+        """Connect to a process which is contactable via the given 'address'."""
 
         channel = connect_persistent(address)
         self.add_wait(channel)
 
 
 class ManagedCallable:
-    "A callable managed by an exchange."
+    """A callable managed by an exchange."""
 
     def __init__(self, callable, exchange):
         """
@@ -671,13 +671,13 @@ class ManagedCallable:
         self.exchange = exchange
 
     def __call__(self, *args, **kw):
-        "Invoke the callable with the supplied arguments."
+        """Invoke the callable with the supplied arguments."""
 
         self.exchange.start(self.callable, *args, **kw)
 
 
 class PersistentCallable:
-    "A callable which sets up a persistent communications channel."
+    """A callable which sets up a persistent communications channel."""
 
     def __init__(self, address, callable, exchange):
         """
@@ -694,7 +694,7 @@ class PersistentCallable:
         self.address = address
 
     def __call__(self, *args, **kw):
-        "Invoke the callable with the supplied arguments."
+        """Invoke the callable with the supplied arguments."""
 
         self.exchange.start(self.address, self.callable, *args, **kw)
 
@@ -718,7 +718,7 @@ class BackgroundCallable:
         self.address = address
 
     def __call__(self, *args, **kw):
-        "Invoke the callable with the supplied arguments."
+        """Invoke the callable with the supplied arguments."""
 
         start_persistent(self.address, self.callable, *args, **kw)
 
@@ -726,7 +726,7 @@ class BackgroundCallable:
 # Abstractions and utilities.
 
 class Map(Exchange):
-    "An exchange which can be used like the built-in 'map' function."
+    """An exchange which can be used like the built-in 'map' function."""
 
     def __init__(self, *args, **kw):
         Exchange.__init__(self, *args, **kw)
@@ -734,7 +734,7 @@ class Map(Exchange):
 
     def init(self):
 
-        "Remember the channel addition order to order output."
+        """Remember the channel addition order to order output."""
 
         self.channel_number = 0
         self.channels = {}
@@ -743,7 +743,7 @@ class Map(Exchange):
 
     def add(self, channel):
 
-        "Add the given 'channel' to the exchange."
+        """Add the given 'channel' to the exchange."""
 
         Exchange.add(self, channel)
         self.channels[channel] = self.channel_number
@@ -774,7 +774,7 @@ class Map(Exchange):
 
     def __call__(self, callable, sequence):
 
-        "Wrap and invoke 'callable' for each element in the 'sequence'."
+        """Wrap and invoke 'callable' for each element in the 'sequence'."""
 
         if not isinstance(callable, MakeParallel):
             wrapped = MakeParallel(callable)
@@ -794,7 +794,7 @@ class Map(Exchange):
 
     def store_data(self, channel):
 
-        "Accumulate the incoming data, associating results with channels."
+        """Accumulate the incoming data, associating results with channels."""
 
         data = channel.receive()
         self.results[self.channels[channel]] = data
@@ -805,7 +805,7 @@ class Map(Exchange):
 
     def next(self):
 
-        "Return the next element in the map."
+        """Return the next element in the map."""
 
         try:
             return self._next()
@@ -823,7 +823,7 @@ class Map(Exchange):
 
     def __getitem__(self, i):
 
-        "Return element 'i' from the map."
+        """Return element 'i' from the map."""
 
         try:
             return self._get(i)
@@ -865,7 +865,7 @@ class Queue(Exchange):
 
     def store_data(self, channel):
 
-        "Accumulate the incoming data, associating results with channels."
+        """Accumulate the incoming data, associating results with channels."""
 
         data = channel.receive()
         self.queue.insert(0, data)
@@ -875,7 +875,7 @@ class Queue(Exchange):
 
     def next(self):
 
-        "Return the next element in the queue."
+        """Return the next element in the queue."""
 
         if self.queue:
             return self.queue.pop()
@@ -889,13 +889,13 @@ class Queue(Exchange):
 
     def __len__(self):
 
-        "Return the current length of the queue."
+        """Return the current length of the queue."""
 
         return len(self.queue)
 
 
 class MakeParallel:
-    "A wrapper around functions making them able to communicate results."
+    """A wrapper around functions making them able to communicate results."""
 
     def __init__(self, callable):
         """
@@ -908,7 +908,7 @@ class MakeParallel:
         self.callable = callable
 
     def __call__(self, channel, *args, **kw):
-        "Invoke the callable and return its result via the given 'channel'."
+        """Invoke the callable and return its result via the given 'channel'."""
 
         channel.send(self.callable(*args, **kw))
 
@@ -920,7 +920,7 @@ class MakeReusable(MakeParallel):
     """
 
     def __call__(self, channel, *args, **kw):
-        "Invoke the callable and return its result via the given 'channel'."
+        """Invoke the callable and return its result via the given 'channel'."""
 
         channel.send(self.callable(*args, **kw))
         t = channel.receive()
@@ -933,14 +933,14 @@ class MakeReusable(MakeParallel):
 # Persistent variants.
 
 class PersistentExchange(Persistent, Exchange):
-    "An exchange which manages persistent communications."
+    """An exchange which manages persistent communications."""
 
     def store_data(self, channel):
         pass
 
 
 class PersistentQueue(Persistent, Queue):
-    "A queue which manages persistent communications."
+    """A queue which manages persistent communications."""
 
     pass
 
@@ -1043,7 +1043,7 @@ _system_profiler_field = "Total Number of Cores:"
 
 
 def _get_number_of_cores_macosx():
-    "Return the number of cores for Mac OS X."
+    """Return the number of cores for Mac OS X."""
 
     f = os.popen("/usr/sbin/system_profiler -detailLevel full SPHardwareDataType")
     try:
@@ -1232,7 +1232,7 @@ def close_streams():
 
 
 def waitall():
-    "Wait for all created processes to terminate."
+    """Wait for all created processes to terminate."""
 
     try:
         while 1:
