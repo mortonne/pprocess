@@ -73,11 +73,11 @@ class Indexer:
 
         slot = self.index
         for c in token:
-            if not slot.has_key(c):
+            if c not in slot:
                 slot[c] = {}, {}
             slot, words = slot[c]
 
-        if not words.has_key(token):
+        if token not in words:
             words[token] = []
         words[token].append(filename)
 
@@ -93,7 +93,7 @@ class Searcher:
         words = []
 
         for c in pattern:
-            if not slot.has_key(c):
+            if c not in slot:
                 return []
             slot, words = slot[c]
 
@@ -107,7 +107,7 @@ class Searcher:
         "Get all words under the given index 'slot'."
 
         all_words = {}
-        keys = slot.keys()
+        keys = list(slot.keys())
         keys.sort()
         for c in keys:
             this_slot, words = slot[c]

@@ -81,13 +81,13 @@ if __name__ == "__main__":
     try:
         directory = sys.argv[1]
     except IndexError:
-        print "Please specify a directory where text files reside."
-        print "To investigate other performance factors, you can also specify"
-        print "a window size (eg. 1, 5, 10, ...) indicating the number of"
-        print "channels/processes being used, a slice size (eg. 5, 10, ...)"
-        print "indicating the number of filenames given to each created process"
-        print "and a time delay to simulate heavy processing in each created"
-        print "process (eg. 0.5, 1, ...)."
+        print("Please specify a directory where text files reside.")
+        print("To investigate other performance factors, you can also specify")
+        print("a window size (eg. 1, 5, 10, ...) indicating the number of")
+        print("channels/processes being used, a slice size (eg. 5, 10, ...)")
+        print("indicating the number of filenames given to each created process")
+        print("and a time delay to simulate heavy processing in each created")
+        print("process (eg. 0.5, 1, ...).")
         sys.exit(1)
 
     if len(sys.argv) > 2:
@@ -118,8 +118,8 @@ if __name__ == "__main__":
 
     if "--noprompt" not in sys.argv:
         while 1:
-            print "Pattern:",
-            pattern = raw_input()
-            print searcher.find(pattern)
+            print("Pattern:", end=' ')
+            pattern = input()
+            print(searcher.find(pattern))
 
 # vim: tabstop=4 expandtab shiftwidth=4
