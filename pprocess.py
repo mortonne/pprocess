@@ -42,7 +42,8 @@ except ImportError:
 
 # Special values.
 
-class Undefined: pass
+class Undefined:
+    pass
 
 
 # Communications.
