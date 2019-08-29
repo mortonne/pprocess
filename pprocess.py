@@ -994,7 +994,7 @@ def _get_number_of_cores():
 
             processor = [None, None, None]
 
-            for line in f.xreadlines():
+            for line in f:
                 for i, field in enumerate(_cpuinfo_fields):
 
                     # Where the field is found, insert the value into the
