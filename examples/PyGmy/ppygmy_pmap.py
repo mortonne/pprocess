@@ -370,7 +370,7 @@ class world:
         total = self.width * self.height
         count = 0
 
-        for sy, row in enumerate(pprocess.pmap(self.render_row, xrange(0, self.height), limit)):
+        for sy, row in enumerate(pprocess.pmap(self.render_row, range(0, self.height), limit)):
             for sx, col in enumerate(row):
                 draw.point((sx,sy),fill=(col.x*255,col.y*255,col.z*255))
                 count = count + 1

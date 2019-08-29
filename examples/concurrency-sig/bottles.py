@@ -30,7 +30,7 @@ def grep(ch, lines, pattern):
 
 def printer(lines):
     for l in lines:
-        print l.strip()
+        print(l.strip())
 
 def multigrep(ch, pattern):
     queue = pprocess.Queue(continuous=1)

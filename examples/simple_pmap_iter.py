@@ -45,10 +45,10 @@ if __name__ == "__main__":
     # Show the results.
 
     for i, result in enumerate(results):
-        print result,
+        print(result, end=' ')
         if i % N == N - 1:
-            print
+            print()
 
-    print "Time taken:", time.time() - t
+    print("Time taken:", time.time() - t)
 
 # vim: tabstop=4 expandtab shiftwidth=4

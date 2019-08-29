@@ -101,13 +101,13 @@ if __name__ == "__main__":
         # Close down the exchange.
 
         del exchange
-        print "Closed original exchange."
+        print("Closed original exchange.")
 
     if "--start" not in sys.argv:
 
         # Open another exchange.
 
-        print "Opening new exchange."
+        print("Opening new exchange.")
         exchange = MyPersistentExchange(limit=1)
         exchange.D = results
 
@@ -117,16 +117,16 @@ if __name__ == "__main__":
 
         # Wait for the results.
 
-        print "Waiting for persistent results"
+        print("Waiting for persistent results")
         exchange.finish()
 
         # Show the results.
 
         for i in range(0, N):
             for result in results[i*N:i*N+N]:
-                print result,
-            print
+                print(result, end=' ')
+            print()
 
-        print "Time taken:", time.time() - t
+        print("Time taken:", time.time() - t)
 
 # vim: tabstop=4 expandtab shiftwidth=4

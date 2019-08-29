@@ -53,23 +53,23 @@ if __name__ == "__main__":
 
     # Perform the work.
 
-    print "Calculating..."
+    print("Calculating...")
     for i in range(0, N):
         for j in range(0, N):
             exchange.start(calculate, i, j)
 
     # Wait for the results.
 
-    print "Finishing..."
+    print("Finishing...")
     exchange.finish()
 
     # Show the results.
 
     for i in range(0, N):
         for result in results[i*N:i*N+N]:
-            print result,
-        print
+            print(result, end=' ')
+        print()
 
-    print "Time taken:", time.time() - t
+    print("Time taken:", time.time() - t)
 
 # vim: tabstop=4 expandtab shiftwidth=4

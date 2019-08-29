@@ -32,10 +32,10 @@ def printer(lines, delay=5000):
     while 1:
         lines.store(delay)
         if len(lines) > 0:
-            l = lines.next()
-            print l.strip()
+            l = next(lines)
+            print(l.strip())
         else:
-            print "No input received for %d ms." % delay
+            print("No input received for %d ms." % delay)
 
 def multigrep(ch, pattern):
     queue = pprocess.Queue(continuous=1)

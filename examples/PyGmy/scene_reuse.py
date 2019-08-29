@@ -51,16 +51,16 @@ if __name__ == "__main__":
 
     if len(sys.argv) > 1:
         if "--help" in sys.argv:
-            print "Specify a limit to the number of processes."
-            print "For example:"
-            print "python", sys.argv[0], "4"
+            print("Specify a limit to the number of processes.")
+            print("For example:")
+            print("python", sys.argv[0], "4")
             sys.exit(1)
         else:
             limit = int(sys.argv[1])
     else:
         limit = 1
 
-    print "Number of processes:", limit
+    print("Number of processes:", limit)
     w.render("test.tif", limit)
 
 # vim: tabstop=4 expandtab shiftwidth=4

@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # NOTE: Could use the with statement in the loop to package the
     # NOTE: try...finally functionality.
 
-    print "Calculating..."
+    print("Calculating...")
     for i in range(0, N):
         for j in range(0, N):
             ch = queue.create()
@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
     # Store the results as they arrive.
 
-    print "Finishing..."
+    print("Finishing...")
     for i, j, result in queue:
         results[i*N+j] = result
 
@@ -62,9 +62,9 @@ if __name__ == "__main__":
 
     for i in range(0, N):
         for result in results[i*N:i*N+N]:
-            print result,
-        print
+            print(result, end=' ')
+        print()
 
-    print "Time taken:", time.time() - t
+    print("Time taken:", time.time() - t)
 
 # vim: tabstop=4 expandtab shiftwidth=4

@@ -47,14 +47,14 @@ def task():
 
     # Perform the work.
 
-    print "Calculating..."
+    print("Calculating...")
     for i in range(0, N):
         for j in range(0, N):
             calc(i, j)
 
     # Store the results as they arrive.
 
-    print "Finishing..."
+    print("Finishing...")
     for i, j, result in queue:
         results[i*N+j] = result
 
@@ -79,18 +79,18 @@ if __name__ == "__main__":
         # Discard the callable.
 
         del ptask
-        print "Discarded the callable."
+        print("Discarded the callable.")
 
     if "--start" not in sys.argv:
 
         # Open a queue and reconnect to the task.
 
-        print "Opening a queue."
+        print("Opening a queue.")
         queue = pprocess.BackgroundQueue("task.socket")
 
         # Wait for the results.
 
-        print "Waiting for persistent results"
+        print("Waiting for persistent results")
         for results in queue:
             pass # should only be one element
 
@@ -98,9 +98,9 @@ if __name__ == "__main__":
 
         for i in range(0, N):
             for result in results[i*N:i*N+N]:
-                print result,
-            print
+                print(result, end=' ')
+            print()
 
-        print "Time taken:", time.time() - t
+        print("Time taken:", time.time() - t)
 
 # vim: tabstop=4 expandtab shiftwidth=4
