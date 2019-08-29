@@ -1074,10 +1074,10 @@ def create_socketpair():
     pid = os.fork()
     if pid == 0:
         parent.close()
-        return Channel(pid, child.makefile("r", 0), child.makefile("w", 0))
+        return Channel(pid, child.makefile("rb", 0), child.makefile("wb", 0))
     else:
         child.close()
-        return Channel(pid, parent.makefile("r", 0), parent.makefile("w", 0))
+        return Channel(pid, parent.makefile("rb", 0), parent.makefile("wb", 0))
 
 
 def create_pipes():
