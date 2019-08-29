@@ -35,7 +35,7 @@ from time import sleep
 from warnings import warn
 
 try:
-    import cPickle as pickle
+    import pickle as pickle
 except ImportError:
     import pickle
 
@@ -295,7 +295,7 @@ class Exchange:
 
         """Return a list of active channels."""
 
-        return self.readables.values()
+        return list(self.readables.values())
 
     def ready(self, timeout=None):
 
@@ -804,7 +804,7 @@ class Map(Exchange):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
 
         """Return the next element in the map."""
 
@@ -874,7 +874,7 @@ class Queue(Exchange):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
 
         """Return the next element in the queue."""
 
@@ -1048,7 +1048,7 @@ def _get_number_of_cores_macosx():
 
     f = os.popen("/usr/sbin/system_profiler -detailLevel full SPHardwareDataType")
     try:
-        for line in f.xreadlines():
+        for line in f:
             line = line.strip()
             if line.startswith(_system_profiler_field):
                 return int(line[len(_system_profiler_field):].strip())
