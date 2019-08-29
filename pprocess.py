@@ -935,7 +935,8 @@ class MakeReusable(MakeParallel):
 class PersistentExchange(Persistent, Exchange):
     "An exchange which manages persistent communications."
 
-    pass
+    def store_data(self, channel):
+        pass
 
 
 class PersistentQueue(Persistent, Queue):
