@@ -8,6 +8,6 @@ setup(
     author       = "Paul Boddie",
     author_email = "paul@boddie.org.uk",
     url          = "http://www.boddie.org.uk/python/pprocess.html",
-    version      = "0.5.3",
+    version      = "0.6.0",
     py_modules   = ["pprocess"]
     )
